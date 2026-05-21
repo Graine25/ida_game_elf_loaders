@@ -76,9 +76,9 @@ typedef struct _CAFE_RPL_FILE_INFO_4_2
   Elf32_Word mFileInfoPad;
   Elf32_Word mSDKVersion;
   Elf32_Word mSDKRevision;
-  Elf32_Word mTLSModuleIndex;
+  Elf32_Half mTLSModuleIndex;
   Elf32_Half mTLSAlignShift;
-  Elf32_Half mRuntimeFileInfoSize;
+  Elf32_Word mRuntimeFileInfoSize;
 } CAFE_RPL_FILE_INFO_4_2;
 
 #endif /* CAFE_H */
