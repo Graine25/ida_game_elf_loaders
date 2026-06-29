@@ -15,20 +15,46 @@ Copy loader plugins to IDA loaders directory.
 * IDA SDK
 * [CMake](https://cmake.org/download/)
 
-### Generate Projects With CMake
-The IDA cmake module included will expect to find the IDA SDK in an `IDA_SDK_DIR` or `IDA_SDK` environment variable.
-If you would like to generate 64-bit EA targeted loaders, you need to add `-D IDA_64_BIT_EA_T=YES` to cmake command line.
+### Wii U loader
+The maintained Wii U loader builds on 64-bit Windows, macOS, and Linux. The
+bundled IDA SDK submodule contains libraries for these targets:
 
-Navigate to the directory of the loader you would like to build in 'src/', then run the following command
+* Windows x86_64
+* macOS arm64 and x86_64
+* Linux arm64 and x86_64
 
-`mkdir build && cd build && cmake ../`
+Initialize the submodules before configuring:
 
-This should create a build directory with your generated project files.
+```sh
+git submodule update --init --recursive
+```
 
-### Building
-Optionally, you can also build using cmake with the following command
+Configure and build a native macOS or Linux release:
 
-`cmake --build ./`
+```sh
+cmake -S src/wiiu -B build/wiiu -DCMAKE_BUILD_TYPE=Release
+cmake --build build/wiiu
+```
+
+On macOS, select a non-native architecture explicitly when needed. Keep each
+architecture in a separate build directory:
+
+```sh
+cmake -S src/wiiu -B build/wiiu-x64 \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_OSX_ARCHITECTURES=x86_64
+cmake --build build/wiiu-x64
+```
+
+On Windows, use a 64-bit Visual Studio generator:
+
+```powershell
+cmake -S src/wiiu -B build/wiiu -A x64
+cmake --build build/wiiu --config Release
+```
+
+The resulting loader is named `wiiu.dll`, `wiiu.dylib`, or `wiiu.so`
+according to the host platform. Copy it into IDA's `loaders` directory.
 
 ## Notes
 

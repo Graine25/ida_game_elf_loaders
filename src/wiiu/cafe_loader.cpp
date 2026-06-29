@@ -147,14 +147,14 @@ void cafe_loader::applySegments()
     if (data == nullptr || section.sh_size < sizeof(uint32))
       continue;
 
-    uint32 deflated_len = 0;
-    std::memcpy(&deflated_len, data, sizeof(deflated_len));
-    swap(deflated_len);
+    uint32 expected_len = 0;
+    std::memcpy(&expected_len, data, sizeof(expected_len));
+    swap(expected_len);
 
-    auto *deflated_data = new unsigned char[deflated_len];
-    deflated_len = tinfl_decompress_mem_to_mem(
+    auto *deflated_data = new unsigned char[expected_len];
+    const size_t deflated_len = tinfl_decompress_mem_to_mem(
       deflated_data,
-      deflated_len,
+      expected_len,
       data + sizeof(uint32),
       section.sh_size - sizeof(uint32),
       TINFL_FLAG_PARSE_ZLIB_HEADER);
