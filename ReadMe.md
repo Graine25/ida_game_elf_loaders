@@ -4,7 +4,7 @@ A collection of user mode ELF loaders for the following game consoles:
 * ~~PS Vita~~
 * Wii U
 
-You should use other repositories for the non-Wii U ELF loaders, as this one is only aimed at providing an updated version of the RPX loader.
+You should use other repositories for the non-Wii U ELF loaders, as this one is only aimed at providing an updated version of the RPX loader. 
 
 ## Installation
 Copy loader plugins to IDA loaders directory.
